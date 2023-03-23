@@ -2,5 +2,6 @@ mongo:
   host: localhost
   driver: mongodb
   port: 27017
+  db_name: secret_app
   password: admin
   username: admin

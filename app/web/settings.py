@@ -11,6 +11,7 @@ class MongoConfig(BaseSettings):
     driver: str
     username: str
     password: str
+    db_name: str
 
 
 class Settings(BaseSettings):
@@ -18,9 +19,11 @@ class Settings(BaseSettings):
 
     @property
     def mongo_url(self) -> str:
-        return f"{self.mongo.driver}://{self.mongo.username}:" \
-               f"{self.mongo.password}@{self.mongo.host}" \
-               f":{self.mongo.port}"
+        return (
+            f"{self.mongo.driver}://{self.mongo.username}:"
+            f"{self.mongo.password}@{self.mongo.host}"
+            f":{self.mongo.port}/{self.mongo.db_name}"
+        )
 
 
 def setup_settings() -> Settings:
@@ -38,6 +41,7 @@ def setup_settings() -> Settings:
             driver=raw_config["mongo"]["driver"],
             username=raw_config["mongo"]["username"],
             password=raw_config["mongo"]["password"],
+            db_name=raw_config["mongo"]["db_name"],
         ),
     )
 

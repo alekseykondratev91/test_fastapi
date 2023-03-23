@@ -1,7 +1,5 @@
 import uvicorn
 
-from app.web.settings import settings
-
 
 def main() -> None:
     uvicorn.run(
