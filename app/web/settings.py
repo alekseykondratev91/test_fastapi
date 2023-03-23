@@ -22,7 +22,7 @@ class Settings(BaseSettings):
         return (
             f"{self.mongo.driver}://{self.mongo.username}:"
             f"{self.mongo.password}@{self.mongo.host}"
-            f":{self.mongo.port}/{self.mongo.db_name}"
+            f":{self.mongo.port}/{self.mongo.db_name}?authSource=admin"
         )
 
 
