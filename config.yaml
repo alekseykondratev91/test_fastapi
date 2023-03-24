@@ -1,3 +1,5 @@
+auth:
+  auth_key: +KbPeShVmYq3t6w9z$C&E)H@McQfTjWnZr4u7x!A%D*G-JaNdRgUkXp2s5v8y/B?
 mongo:
   host: localhost
   driver: mongodb

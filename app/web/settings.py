@@ -5,6 +5,10 @@ import yaml
 from pydantic import BaseSettings
 
 
+class AuthConfig(BaseSettings):
+    auth_key: str
+
+
 class MongoConfig(BaseSettings):
     host: str
     port: str
@@ -15,6 +19,7 @@ class MongoConfig(BaseSettings):
 
 
 class Settings(BaseSettings):
+    auth: Optional[AuthConfig]
     mongo: Optional[MongoConfig]
 
     @property
@@ -35,6 +40,7 @@ def setup_settings() -> Settings:
         raw_config = yaml.safe_load(f)
 
     return Settings(
+        auth=AuthConfig(auth_key=raw_config["auth"]["auth_key"]),
         mongo=MongoConfig(
             host=raw_config["mongo"]["host"],
             port=int(raw_config["mongo"]["port"]),

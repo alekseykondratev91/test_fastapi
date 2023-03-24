@@ -1,12 +1,13 @@
-from beanie import Document
+from beanie import Document, Indexed
 from pydantic import Field
 from pydantic.networks import EmailStr
 
 
 class User(Document):
-    username: str = Field(...)
+    first_name: str = Field(...)
+    last_name: str = Field(...)
     password: str = Field(...)
-    email: EmailStr = Field(...)
+    email: Indexed(EmailStr, unique=True)
 
     class Settings:
         name = "user"
@@ -14,8 +15,9 @@ class User(Document):
     class Config:
         schema_extra = {
             "example": {
-                "username": "Username",
-                "password": "SHA256-password",
-                "email": "username@email.com"
+                "first_name": "Monty",
+                "last_name": "Python",
+                "password": "password",
+                "email": "username@email.com",
             }
         }
