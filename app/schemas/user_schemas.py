@@ -15,3 +15,12 @@ class UserResponse(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "first_name": "Monty",
+                "last_name": "Python",
+                "email": "username@email.com",
+            }
+        }
