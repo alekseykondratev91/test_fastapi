@@ -16,6 +16,7 @@ packaging==23.0
 pathspec==0.11.1
 platformdirs==3.1.1
 pyaml==21.10.1
+pycryptodome==3.17
 pydantic==1.10.6
 PyJWT==1.7.1
 pymongo==4.3.3

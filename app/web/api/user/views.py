@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
 
 from app.database.models.user import User
+from app.schemas.secret_schemas import SecretResponse
 from app.schemas.user_schemas import UserLogin, UserResponse
 from app.utils.user_utils import get_salt, hash_password, validate_password
 
@@ -58,8 +59,24 @@ async def login_user(user: UserLogin, authorize: AuthJWT = Depends()):
     )
 
 
+@router.get("/user.list_secrets", response_model=UserResponse)
+async def list_my_secrets(authorize: AuthJWT = Depends()):
+    authorize.jwt_required()
+    current_user = await User.find_one({"email": authorize.get_jwt_subject()})
+    await current_user.fetch_all_links()
+    return UserResponse(
+        first_name=current_user.first_name,
+        last_name=current_user.last_name,
+        email=current_user.email,
+        secrets=[
+            SecretResponse(secret_key=secret.id, secret_name=secret.secret_name)
+            for secret in current_user.secrets
+        ],
+    )
+
+
 @router.delete("/user.logout")
-def logout(authorize: AuthJWT = Depends()):
+async def logout(authorize: AuthJWT = Depends()):
     authorize.jwt_required()
     authorize.unset_jwt_cookies()
     return {"msg": "Successfully logout"}
