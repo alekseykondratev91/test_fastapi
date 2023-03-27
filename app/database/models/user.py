@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from beanie import Document, Indexed, Link
 from pydantic import Field
@@ -12,7 +12,7 @@ class User(Document):
     last_name: str = Field(...)
     password: str = Field(...)
     email: Indexed(EmailStr, unique=True)
-    secrets: Optional[List[Link[Secret]]]
+    secrets: Optional[List[Link[Secret]]] = None
 
     class Settings:
         name = "user"

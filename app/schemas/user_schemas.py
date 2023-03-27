@@ -1,4 +1,8 @@
+from typing import List, Optional
+
 from pydantic import BaseModel, EmailStr, Field
+
+from app.schemas.secret_schemas import SecretResponse
 
 
 class UserLogin(BaseModel):
@@ -15,6 +19,7 @@ class UserResponse(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr
+    secrets: Optional[List[SecretResponse]]
 
     class Config:
         schema_extra = {
