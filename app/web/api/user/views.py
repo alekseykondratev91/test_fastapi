@@ -80,3 +80,12 @@ async def logout(authorize: AuthJWT = Depends()):
     authorize.jwt_required()
     authorize.unset_jwt_cookies()
     return {"msg": "Successfully logout"}
+
+
+@router.get("/refresh_token")
+async def refresh(authorize: AuthJWT = Depends()):
+    authorize.jwt_refresh_token_required()
+    current_user = authorize.get_jwt_subject()
+    new_access_token = authorize.create_access_token(subject=current_user)
+    authorize.set_access_cookies(new_access_token)
+    return {"msg": "The token has been refresh"}

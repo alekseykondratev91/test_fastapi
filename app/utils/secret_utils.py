@@ -1,6 +1,5 @@
 import base64
 import hashlib
-from json import dumps
 
 from Crypto import Random
 from Crypto.Cipher import AES
